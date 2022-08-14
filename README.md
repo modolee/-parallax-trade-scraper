@@ -1,0 +1,1 @@
+# -parallax-trade-scraper
