@@ -1,16 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { launch } from 'puppeteer';
 import {
-  CURRENCY_COUNTRY_MAP,
-  COUNTRY_CURRENCY_MAP,
-} from 'src/constants/currency.constant';
-import { BankCurrencyInfo } from 'src/interfaces/currency.interface';
-import {
   BANK_CODE,
   BROWSER_TIMEOUT,
   KOREA_PRICE_SOURCE_URL,
-} from 'src/constants';
-import { parseFloatFromString } from 'src/helpers/number.helper';
+  CURRENCY_COUNTRY_MAP,
+  COUNTRY_CURRENCY_MAP,
+} from 'src/common/constants';
+import { BankCurrencyInfo } from 'src/common/interfaces';
+import { parseFloatFromString } from 'src/common/helpers';
 
 @Injectable()
 export class ScrapService {

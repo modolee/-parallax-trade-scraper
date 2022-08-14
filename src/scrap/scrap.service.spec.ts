@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BANK_CODE, KOREA_PRICE_SOURCE_URL } from 'src/constants';
+import { BANK_CODE, KOREA_PRICE_SOURCE_URL } from 'src/common/constants';
 import { ScrapModule } from './scrap.module';
 import { ScrapService } from './scrap.service';
 
