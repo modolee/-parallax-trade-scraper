@@ -9,3 +9,9 @@ export const COUNTRY_CURRENCY_MAP = {
   일본: 'JPY',
   유럽연합: 'EUR',
 };
+
+export const CURRENCY_PAIR_CODE = {
+  USD: '650',
+  JPY: '159',
+  EUR: '158',
+};

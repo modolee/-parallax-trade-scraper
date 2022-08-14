@@ -13,3 +13,9 @@ export interface BankCurrencyInfo {
   JPY: CurrencyPrice;
   EUR: CurrencyPrice;
 }
+
+export interface InternationalBasePrice {
+  USD: number;
+  JPY: number;
+  EUR: number;
+}

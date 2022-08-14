@@ -30,16 +30,41 @@ describe('Scrap Module', () => {
     expect(Object.keys(currencyInfo).length).toEqual(3);
   }, 100000);
 
-  test.only('Scrap currency rate (All Banks)', async () => {
+  test('Scrap currency rate (All Banks)', async () => {
     // GIVEN
 
     // WHEN
     const currencyInfoOfAllBanks =
       await scrapService.getCurrencyInfoOfAllBanks();
 
-    console.dir({ currencyInfoOfAllBanks }, { depth: null });
+    // console.dir({ currencyInfoOfAllBanks }, { depth: null });
 
     // THEN
     expect(Object.keys(currencyInfoOfAllBanks).length).toEqual(6);
   }, 100000);
+
+  test('Scrap international base price (USD)', async () => {
+    // GIVEN
+    const pair = 'USD';
+
+    // WHEN
+    const internationalUsdBasePrice =
+      await scrapService.getInternationalBasePrice(pair);
+
+    // THEN
+    expect(internationalUsdBasePrice).toBeGreaterThanOrEqual(900);
+  });
+
+  test.only('Scrap international base price (All Pair)', async () => {
+    // GIVEN
+
+    // WHEN
+    const internationalBasePriceOfAllPair =
+      await scrapService.getInternationalBasePriceOfAllPairs();
+
+    // console.dir({ internationalBasePriceOfAllPair }, { depth: null });
+
+    // THEN
+    expect(Object.keys(internationalBasePriceOfAllPair).length).toEqual(3);
+  });
 });

@@ -6,12 +6,51 @@ import {
   KOREA_PRICE_SOURCE_URL,
   CURRENCY_COUNTRY_MAP,
   COUNTRY_CURRENCY_MAP,
+  INTERNATIONAL_PRICE_SOURCE_URL_PREFIX,
+  INTERNATIONAL_PRICE_SOURCE_URL_POSTFIX,
+  CURRENCY_PAIR_CODE,
 } from 'src/common/constants';
-import { BankCurrencyInfo } from 'src/common/interfaces';
+import {
+  BankCurrencyInfo,
+  InternationalBasePrice,
+} from 'src/common/interfaces';
 import { parseFloatFromString } from 'src/common/helpers';
+import { fetchData } from 'src/common/helpers/fetch.helper';
 
 @Injectable()
 export class ScrapService {
+  async getInternationalBasePriceOfAllPairs(): Promise<InternationalBasePrice> {
+    const basePriceOfAllPairs = {} as InternationalBasePrice;
+
+    await Promise.all(
+      Object.keys(CURRENCY_PAIR_CODE).map(async (pairName) => {
+        basePriceOfAllPairs[pairName] = await this.getInternationalBasePrice(
+          pairName,
+        );
+      }),
+    );
+
+    return basePriceOfAllPairs;
+  }
+
+  async getInternationalBasePrice(pairName: string): Promise<number> {
+    const url = `${INTERNATIONAL_PRICE_SOURCE_URL_PREFIX}${CURRENCY_PAIR_CODE[pairName]}${INTERNATIONAL_PRICE_SOURCE_URL_POSTFIX}`;
+
+    const result = await fetchData(url);
+
+    if (!result) {
+      throw new Error(`Can't fetch International Base Price`);
+    }
+
+    let basePrice = Number.parseFloat(result.data[0].data[1]);
+
+    if (pairName === 'JPY') {
+      basePrice *= 100;
+    }
+
+    return basePrice;
+  }
+
   /**
    * 모든 은행의 환율 정보 가져오기
    * @returns
