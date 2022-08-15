@@ -28,8 +28,6 @@ FROM node:16-alpine as runner
 WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./
 
 # 실행할 명령어
-ENTRYPOINT ["yarn", "start:prod"]
+ENTRYPOINT ["node", "./dist/main.js"]
