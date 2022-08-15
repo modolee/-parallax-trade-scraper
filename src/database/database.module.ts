@@ -17,7 +17,7 @@ import {
       username: MARIADB_USER,
       password: MARIADB_PASSWORD,
       database: MARIADB_DATABASE,
-      entities: [],
+      autoLoadEntities: true,
       synchronize: true,
     }),
   ],
