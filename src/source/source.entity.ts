@@ -1,5 +1,5 @@
+import { Commission } from 'src/commission/commission.entity';
 import { ExchangeRate } from 'src/exchange-rate/exchange-rate.entity';
-import { PreferentialRate } from 'src/preferential-rate/preferential-rate.entity';
 import {
   Column,
   CreateDateColumn,
@@ -10,17 +10,17 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Bank {
+export class Source {
   @PrimaryGeneratedColumn({ comment: 'ID' })
   id: number;
 
-  @Column({ comment: '은행명' })
+  @Column({ comment: '데이터 출처명' })
   name: string;
 
-  @Column({ comment: '최대 환전 보관 한도 (달러)' })
+  @Column({ comment: '최대 환전 보관 한도 (달러)', nullable: true })
   maxLimit: number;
 
-  @Column({ comment: '1일 최대 환전 한도 (달러)' })
+  @Column({ comment: '1일 최대 환전 한도 (달러)', nullable: true })
   maxLimitInOneDay: number;
 
   @CreateDateColumn({ comment: '생성일시' })
@@ -29,12 +29,11 @@ export class Bank {
   @UpdateDateColumn({ comment: '갱신일시' })
   updatedAt: Date;
 
-  @OneToMany((type) => ExchangeRate, (exchangeRate) => exchangeRate.bank)
+  // 환율
+  @OneToMany((type) => ExchangeRate, (exchangeRate) => exchangeRate.source)
   exchangeRates: ExchangeRate[];
 
-  @OneToMany(
-    (type) => PreferentialRate,
-    (preferentialRate) => preferentialRate.bank,
-  )
-  preferentialRates: PreferentialRate[];
+  // 수수료
+  @OneToMany((type) => Commission, (commission) => commission.source)
+  commissions: Commission[];
 }

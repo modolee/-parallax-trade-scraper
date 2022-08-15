@@ -1,4 +1,4 @@
-import { Bank } from 'src/bank/bank.entity';
+import { Source } from 'src/source/source.entity';
 import {
   Column,
   CreateDateColumn,
@@ -9,21 +9,24 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class PreferentialRate {
+export class Commission {
   @PrimaryGeneratedColumn({ comment: 'ID' })
   id: number;
 
   @Column({ comment: '통화 종류' })
   currency: string;
 
+  @Column({ comment: '현찰 살 때 스프레드 (%)' })
+  buySpread: number;
+
   @Column({ comment: '현찰 살 때 우대율 (%)' })
-  buy: number;
+  buyPreferentialRate: number;
+
+  @Column({ comment: '현찰 팔 때 스프레드 (%)' })
+  sellSpread: number;
 
   @Column({ comment: '현찰 팔 때 우대율 (%)' })
-  sell: number;
-
-  @Column({ comment: '송금 보낼 때 우대율 (%)' })
-  transfer: number;
+  sellPreferentialRate: number;
 
   @CreateDateColumn({ comment: '생성일시' })
   createdAt: Date;
@@ -31,6 +34,6 @@ export class PreferentialRate {
   @UpdateDateColumn({ comment: '갱신일시' })
   updatedAt: Date;
 
-  @ManyToOne((type) => Bank, (bank) => bank.exchangeRates)
-  bank: Bank;
+  @ManyToOne((type) => Source, (source) => source.exchangeRates)
+  source: Source;
 }
